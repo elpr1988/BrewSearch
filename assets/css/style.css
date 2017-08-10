@@ -1,0 +1,19 @@
+body {
+	background: url(..assets/images/lynnwood.png) no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;;
+}
+
+.container{
+	font-family: 'Electrolize', sans-serif;
+}
+
+.jumbotron {
+	background: black;
+	color: white;
+	text-align: left;
+	font-family: 'Amatic SC', cursive;
+
+}
