@@ -17,3 +17,9 @@ body {
 	font-family: 'Amatic SC', cursive;
 
 }
+
+ #map {
+  height: 900px;
+  width:900px;
+  margin: 0;
+}
