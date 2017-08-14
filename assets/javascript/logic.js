@@ -1,37 +1,161 @@
+
 $(document).ready(function(){
+var markers = [];
+var id = [];
+var map;
+var contentArray = [];
+// $("#myLocation").on("click", function(){
+// initMap();
+// });
 
 
-	function map(lat, lng){
-
-		var mapOptions = {
-        center: new google.maps.LatLng(lat, lng),
-        zoom: 12,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      };
-
-      var map = new google.maps.Map(document.getElementById('map'), mapOptions);
-     
+locationList();
+      
 
 
-    // var markerOptions = {
-    //   position: new google.maps.LatLng(currentLat, currentLong)
-    // };
-    // var marker = new google.maps.Marker(markerOptions);
-    // marker.setMap(map);
-	}
+function locationList(){
+  
+  location = localStorage.location;
+      if (typeof location == 'undefined'&& location== null)
+          {initMap(); }
+      
+
+    
+
+    var location = localStorage.location;
+
+    var queryURL = "https://beermapping.com/webservice/loccity/3bbcd085dbe77ae9690c3252ab266741/"+location+"&s=json";
+    $.ajax({
+      url: queryURL,
+      method: "GET"
+    }).done(function(response) {
 
 
-$.getJSON('https://ipapi.co/json/', function(response){
+    	var nlat=localStorage.lat;
+      	var nlng=localStorage.lng;
+      	var location = localStorage.location;
+      	
+
+     	 var mapOptions = {
+	        center: new google.maps.LatLng(nlat, nlng),
+	        zoom: 12,
+	        mapTypeId: google.maps.MapTypeId.ROADMAP
+	      };
+
+    var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+  
+
+
+
+
+      for (var i = 0; i < response.length; i++) {
+        	id.push(response[i].id);
+
+        	var contentObj=response[i].name
+        					
+        					
+        	contentArray.push(contentObj);
+
+        	content= contentArray[i];
+
+
+
+			      //     response[i].city + ', ' + response[i].state + ' ' + response[i].zip + '<br>' +
+			      //     response[i].country + '<br>' + response[i].phone + '<br>' + response[i].status}
+        	// contentArray.push  '<div id="content">'+
+			      //     '<div id="siteNotice">'+
+			      //     '</div>'+
+			      //     '<h1 id="firstHeading" class="firstHeading">'+ response[i].name +'</h1>'+
+			      //     '<div id="bodyContent">'+
+			      //     '<div class="address">' + response[i].street + '<br>' +
+			      //     response[i].city + ', ' + response[i].state + ' ' + response[i].zip + '<br>' +
+			      //     response[i].country + '<br>' + response[i].phone + '<br>' + response[i].status +
+			      //     '</div>'+ '</div>';  
+    
+                var mapURL = "https://beermapping.com/webservice/locmap/3bbcd085dbe77ae9690c3252ab266741/" + response[i].id + "&s=json";
+                setTimeout(function(url) {
+        
+                  $.ajax({
+                    url: url,
+                    method: "GET"
+                  }).done(function(locmap) {
+              var lat = parseFloat(locmap[0].lat);
+              var lng = parseFloat(locmap[0].lng);
+              var locations = {lat: lat, lng:lng};
+              console.log(locations);
+              // for (var j = 0; j < locations.length; j++) {
+              (function (index) {
+                var marker = new google.maps.Marker({
+                  position: locations,
+                  map: map,
+                  title: "TITLE",
+                  content: "<div>Something....</div>",
+                  animation: google.maps.Animation
+                 });
+                   
+                    var infoWindow = new google.maps.InfoWindow();
+                    marker.addListener("click", function (){
+                      // do something with this marker ...
+                      infoWindow.setContent(content);
+                      infoWindow.open(map, marker);
+                    });
+                  })(i);
+
+                });
+         }.bind(null, mapURL), 1 + 100 * i);
+      }
+
+    });
+    
+  }
+
+  $("#citySubmit").on("click", function(){
+
+  			event.preventDefault();
+
+
+    var NewLocation = $("#entry").val();
+    localStorage.setItem('location', NewLocation);
+    alert("entry:"+NewLocation);
+    var geoURL="https://maps.googleapis.com/maps/api/geocode/json?address="+NewLocation+"&key=AIzaSyC6f7J7XFQFcZRQhG5Ep9egZ3_uBMhlwXM"
+    alert("location for geoURL:"+NewLocation);
+
+
+    $.ajax({
+    url:geoURL,
+    method:"GET"
+    }).done(function(geoResponse){
+
+    
+    var lat=geoResponse.results[0].geometry.location.lat;
+    var lng= geoResponse.results[0].geometry.location.lng;
+    alert(lat+", "+lng+", "+location);
+    // locationList(NewLocation);
+    localStorage.setItem("lat",geoResponse.results[0].geometry.location.lat );
+    localStorage.setItem("lng", geoResponse.results[0].geometry.location.lng);
+    locationList();
+  });
+  });
+
+
+
+
+  function initMap(){
+  $.getJSON('https://ipapi.co/json/', function(response){
       console.log(response);
       currentLat = response.latitude;
       currentLong = response.longitude;
-    
-      map(currentLat, currentLong);
-      
- });
+       localStorage.setItem("lat", currentLat);
+      localStorage.setItem("lng", currentLong);
+      console.log(currentLat+", "+currentLong);
+      var currentLocation = response.city+","+response.region_code;
+          localStorage.setItem('location', currentLocation);
 
-
-
-
+      locationList();
+    });
+  }
 
 });
+
+	
+

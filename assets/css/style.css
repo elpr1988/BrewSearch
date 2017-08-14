@@ -1,6 +1,6 @@
 body {
-	background: url(..assets/images/lynnwood.png) no-repeat center center fixed;
-	-webkit-background-size: cover;
+/*	background: url(..images/lynnwood.png) no-repeat center center fixed;
+*/	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;;
@@ -18,8 +18,3 @@ body {
 
 }
 
- #map {
-  height: 900px;
-  width:900px;
-  margin: 0;
-}
