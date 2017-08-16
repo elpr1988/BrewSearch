@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+
+<head>
+
+  <meta charset="UTF-8">
+  <title>Brew Talk!</title>
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <!-- LINK TO FIREBASE GOES HERE -->
+  <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
+
+</head>
+
+<body>
+
+  <div class="container">
+
+    <br>
+
+    <!-- Jumbotron -->
+    <div class="jumbotron">
+      <h1 class="text-center">Let's Talk Beer!</h1>
+    </div>
+
+    <div class="row">
+
+      <!-- Sign-Up Panel-->
+      <div class="col-lg-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Story Time</h3>
+          </div>
+          <div class="panel-body">
+
+            <!-- Sign-up Form (note the various input "types")-->
+
+            <form role="form">
+              <div class="form-group">
+                <label for="name-input">Name:</label>
+                <input class="form-control" id="name-input" type="text">
+              </div>
+              <div class="form-group">
+                <label for="comment-input">Your most recent drunk story... GO!</label>
+                <textarea class="form-control" rows="5" id="comment-input"></textarea>
+              </div>
+              <button class="btn btn-default" id="add-comment" type="submit">Submit</button>
+            </form>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Most Recent Member Panel -->
+      <div class="col-lg-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Recent Stories</h3>
+          </div>
+          <div class="panel-body" id="recent-member">
+            <p id="comment-display"></p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery.js"></script>
+
+  <!-- Script -->
+  <script>
+    // ========================================== START CODING BELOW!!
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDM_zgYBktTpxm4LI2zD-1bG-DGsR5InQ4",
+    authDomain: "beer-f0a54.firebaseapp.com",
+    databaseURL: "https://beer-f0a54.firebaseio.com",
+    projectId: "beer-f0a54",
+    storageBucket: "",
+    messagingSenderId: "739543560391"
+  };
+  firebase.initializeApp(config);
+
+    // Create a variable to reference the database.
+    var database = firebase.database();
+
+    // Initial Values
+    var name = "";
+    var comment = "";
+
+    // Capture Button Click
+    $("#add-comment").on("click", function(event) {
+      event.preventDefault();
+
+      // Grabbed values from text boxes
+      name = $("#name-input").val().trim();
+      comment = $("#comment-input").val().trim();
+
+      // Code for handling the push
+      database.ref().push({
+        name: name,
+        comment: comment,
+        dateAdded: firebase.database.ServerValue.TIMESTAMP
+      });
+      $("#name-input").val("");
+      $("#comment-input").val("");
+    });
+
+    // Firebase watcher + initial loader + order/limit HINT: .on("child_added"
+    database.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", function(snapshot) {
+      // storing the snapshot.val() in a variable for convenience
+      var sv = snapshot.val();
+
+      // Console.loging the last user's data
+      console.log(sv.name);
+      console.log(sv.comment);
+
+      // Change the HTML to reflect
+      $("#name-display").html(sv.name);
+      $("#comment-display").html(sv.comment);
+
+      // Handle the errors
+    }, function(errorObject) {
+      console.log("Errors handled: " + errorObject.code);
+    });
+  </script>
+
+</body>
+
+</html>
