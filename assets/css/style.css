@@ -34,6 +34,16 @@ form {
     font-weight: bold;
     font-family: 'Electrolize', sans-serif;
 }
+.panel-body h2{
+	color: black;
+	font-family: 'Electrolize', sans-serif;
+	font-size: 30px;
+}
+.panel-body p {
+	color: black;
+	font-family: 'Electrolize', sans-serif;
+	font-size: 22px;
+}
 .btn-default {
     font-size: 24px;
 }
@@ -45,12 +55,12 @@ footer {
     float: right;
 }
 p {
-    font-family: 'Quicksand', sans-serif;
+    font-family: 'Electrolize', sans-serif;
 }
 
 .well {
 	color: black;
-	font-family: 'Quicksand', sans-serif;
-	font-size: 17px;
+	font-family: 'Electrolize', sans-serif;
+	font-size: 19px;
 	
 }
