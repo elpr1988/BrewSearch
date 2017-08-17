@@ -3,11 +3,6 @@ $(document).ready(function() {
     var id = [];
     var map;
 
-    // $("#myLocation").on("click", function(){
-    // initMap();
-    // });
-
-
     locationList();
 
 
@@ -65,14 +60,12 @@ $(document).ready(function() {
                             lng: lng
                         };
                         console.log(locations);
-                        // for (var j = 0; j < locations.length; j++) {
                         
                         // (function(index) {
 	                    var marker = new google.maps.Marker({
 	                        position: locations,
 	                        map: map,
 	                        title: brewery.name,
-	                        // content: `<div>${brewery.name}</div>`,
 	                        animation: google.maps.Animation
 	                    });
 	                    var content  = '<div id="content">'+

@@ -1,20 +1,56 @@
 body {
-/*	background: url(..images/lynnwood.png) no-repeat center center fixed;
-*/	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;;
+    background: url(../images/lynnwood.png) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;;
 }
-
 .container{
-	font-family: 'Electrolize', sans-serif;
+    font-family: 'Electrolize', sans-serif;
 }
-
 .jumbotron {
-	background: black;
-	color: white;
-	text-align: left;
-	font-family: 'Amatic SC', cursive;
-
+    background: black;
+    color: white;
+    text-align: left;
+    font-family: 'Amatic SC', cursive;
+    margin: 35px;
+}
+.big-button {
+    float: right;
+    color: white;
+    background-color: grey;
+    padding: 10px;
+    font-size: 18px;
+    font-family: 'Electrolize', sans-serif;
+}
+form {
+    color: black;
+    font-size: 18px;
+    font-family: 'Electrolize', sans-serif;
+}
+.panel-title {
+    color: black;
+    font-size: 24px;
+    font-weight: bold;
+    font-family: 'Electrolize', sans-serif;
+}
+.btn-default {
+    font-size: 24px;
+}
+footer {
+    font-size: 16px;
+    color: white;
+    text-align: right;
+    padding: 10px;
+    float: right;
+}
+p {
+    font-family: 'Quicksand', sans-serif;
 }
 
+.well {
+	color: black;
+	font-family: 'Quicksand', sans-serif;
+	font-size: 17px;
+	
+}
