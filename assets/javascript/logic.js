@@ -102,9 +102,7 @@ $(document).ready(function() {
 
         var NewLocation = $("#entry").val();
         localStorage.setItem('location', NewLocation);
-        alert("entry:" + NewLocation);
         var geoURL = "https://maps.googleapis.com/maps/api/geocode/json?address=" + NewLocation + "&key=AIzaSyC6f7J7XFQFcZRQhG5Ep9egZ3_uBMhlwXM"
-        alert("location for geoURL:" + NewLocation);
 
 
         $.ajax({
@@ -115,7 +113,7 @@ $(document).ready(function() {
 
             var lat = geoResponse.results[0].geometry.location.lat;
             var lng = geoResponse.results[0].geometry.location.lng;
-            alert(lat + ", " + lng + ", " + location);
+
             // locationList(NewLocation);
             localStorage.setItem("lat", geoResponse.results[0].geometry.location.lat);
             localStorage.setItem("lng", geoResponse.results[0].geometry.location.lng);
